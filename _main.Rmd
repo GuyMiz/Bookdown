@@ -1,0 +1,165 @@
+--- 
+title: "Basic Statistical Methods for Public Health"
+author: "Guy Mizrachi"
+date: "`r Sys.Date()`"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+documentclass: book
+github-repo: rstudio/bookdown-demo
+site: bookdown::bookdown_site
+---
+
+```{r, eval=FALSE}
+bookdown::render_book(new_session = TRUE, output_format = "HTML")
+```
+
+
+```{r eval=FALSE}
+bookdown::serve_book()
+```
+
+
+```{r include=FALSE}
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(), 'bookdown', 'knitr', 'rmarkdown'
+), 'packages.bib')
+```
+
+<!--chapter:end:index.Rmd-->
+
+# Introduction
+
+This is an R bookdown format, which will be used to show examples of answers to questions from the course's book. 
+Using this format is supposed to be intuitive, each 'book' will contain chapters, each chapter is a question.
+
+Using R bookdown will allow us to show the question's data and principles through both explanations and visualization. 
+
+**Good luck!**
+
+Guy. 
+
+<!--chapter:end:01-Introduction.rmd-->
+
+# Set A question 1 
+(Page 20)
+
+## Question
+
+"In the U.S In 2000, there were 2.4 million deaths from all causes, compared to 1.9 million in 1970 - a 25% increase. 
+True or false, and explain: the data show that the public's health got worse over the period 1970-2000."
+
+## Answer
+
+**FALSE**
+
+Explain: Although the data points towards an overall increase in deaths,
+it fails to show weather the public's health got worse over that time period. 
+
+An absolute growth (from 1.9 million to 2.4 million) does not suggest **a relative growth**.
+It is safe to assume that the population got bigger as well, which can explain the increase in
+absolute number of deaths.
+
+Let's look at an example of relative and absolute numbers (the population number is just for example):
+
+```{r, echo=FALSE} 
+year_1970 <- c(1.9, 205.1)
+year_2000 <- c(2.4, 282.2)
+years <- c(year_1970,year_2000)
+deaths <- barplot(years, main="Deaths in the U.S",
+  ylab = "Million people", col=c("#8080ff","#ff8080"), names.arg = c('Deaths - 1970','Population - 1970','Deaths - 2000','Population-2000'))
+```
+
+As we can see, although the absolute number of deaths shows an increase of 25%, the relative deaths per population shows a decrease, which contradicts the conclusion that the public's health has got worse.
+
+Let's look at the relative numbers:
+
+```{r, echo=FALSE}
+year_1970_r <- 1.9/205.1
+year_2000_r <- 2.4/282.2
+years_r <- c(year_1970_r,year_2000_r)
+deaths <- barplot(years_r, main="Deaths in the U.S (percentage of population)",
+  ylab = "Deaths/Population", col=c("#8080ff"), names.arg = c('1970','2000'), width = c(5,5), space = 1)
+
+```
+
+
+<!--chapter:end:02-Set-A-Q1.Rmd-->
+
+# Set A question 3 
+(Page 21)
+
+## Question
+
+"Polio is an infectious disease; for example, it seemed to spread when children went swimming together. The
+NFIP study was not done blind: could that bias the results? Discuss briefly"
+
+## Answer
+
+**Yes**, that could create a bias. 
+A study which was not done blind (meaning: the subjects were chosen, not randomly) could have a number of biases for/against the vaccine. 
+If we were to choose children that engage in activites (like swimming) that increased their chances of getting the virus, it would have been a bias against the vaccine.
+
+
+<!--chapter:end:03-Set-A-Q3.Rmd-->
+
+# Set A Question 12
+(page 23)
+
+## Question 
+
+"Physical exercise is considered to increase the risk of spontaneous abortion. Furthermore, women who have had a spontaneous abortion are more likely to have another. One observational study finds that women who exercise regularly have fewer spontaneous abortions than other women. Can you explain the findings of this study?"
+
+## Answer
+
+Women who exercise regularly may not have had any spontaneous abortion in the past, otherwise - they would not have continued to exercise regularly. This study can be explained by **the selection process** between those women: those who exercise regularly are in good health and did not experience spontaneous abortion until now. 
+
+<!--chapter:end:04-Set-A-Q12.Rmd-->
+
+# Set A question 13 
+(Page 24)
+
+## Question
+
+"A hypothetical university has two departments, A and B. There are 2,000 male applicants, of whom half apply to each department. There are 1,100 female applicants: 100 apply to department A and 1,000 to department B. Department A admits 60% of the men who apply and 60% of the women. Department B admits 30% of the men who apply and 30% of the women.' For each department, the percentage of men admitted equals the percentage of women admitted; this must be so for both departments together.' True or false, and explain briefly"
+
+## Answer
+
+**FALSE**
+
+Let's check how many men and women were admitted:
+
+```{r, echo=FALSE}
+
+men <- c(1000,1000)
+women <- c(100,1000)
+
+dep <- c(0.6,0.3)
+
+men_addmited <- (men*dep)
+women_addmited <- (women*dep)
+addmited <- c(men_addmited, women_addmited)
+
+addmited <- matrix(addmited, nrow = 2)
+x <- c(sum(addmited[1,]), sum(addmited[2,]))
+
+b <- barplot(addmited, col = c('#3377ff','#80ffcc'), ylab = "People admitted", names.arg = c("Men", "Women"), ylim = c(0,1000), main = "Men and Women admitted by departments", legend = c("Dep A", "Dep B")) 
+
+
+```
+
+We can see that more men were admitted than women, but let's compare the admission percent (divide by number of men or women):
+
+
+```{r, echo=FALSE}
+addmited_percent <- c((sum(men_addmited)/2000),(sum(women_addmited)/1100))
+b <- barplot(addmited_percent, col = c('#80bfff'), ylab = "Percent admited", names.arg = c("Men", "Women"), main = "Percentage admitted", legend = c("Overall"))
+
+```
+
+Although each department accepted the same percent, with no regard to men/women applicants, higher percentage of men were admitted due to the higher applications for department A (50% of men) comparing to the women's. Department A's admission chances were higher (60%) than department B's, so a higher percentage of men were admitted. 
+
+<!--chapter:end:05-Set-A-Q13.Rmd-->
+
