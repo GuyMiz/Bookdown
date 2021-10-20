@@ -1,0 +1,6 @@
+delete_merged_file: false
+language:
+  ui:
+    chapter_name: ""
+    rmd_files: 
+    html: ["2-Set-A-Q1.Rmd", "03-Set-A-Q3.Rmd", "04-Set-A-Q12.Rmd", "05-Set-A-Q13.Rmd", "01-Introduction.Rmd"]

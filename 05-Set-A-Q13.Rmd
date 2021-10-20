@@ -1,0 +1,42 @@
+# Set A question 13 
+(Page 24)
+
+## Question
+
+"A hypothetical university has two departments, A and B. There are 2,000 male applicants, of whom half apply to each department. There are 1,100 female applicants: 100 apply to department A and 1,000 to department B. Department A admits 60% of the men who apply and 60% of the women. Department B admits 30% of the men who apply and 30% of the women.' For each department, the percentage of men admitted equals the percentage of women admitted; this must be so for both departments together.' True or false, and explain briefly"
+
+## Answer
+
+**FALSE**
+
+Let's check how many men and women were admitted:
+
+```{r, echo=FALSE}
+
+men <- c(1000,1000)
+women <- c(100,1000)
+
+dep <- c(0.6,0.3)
+
+men_addmited <- (men*dep)
+women_addmited <- (women*dep)
+addmited <- c(men_addmited, women_addmited)
+
+addmited <- matrix(addmited, nrow = 2)
+x <- c(sum(addmited[1,]), sum(addmited[2,]))
+
+b <- barplot(addmited, col = c('#3377ff','#80ffcc'), ylab = "People admitted", names.arg = c("Men", "Women"), ylim = c(0,1000), main = "Men and Women admitted by departments", legend = c("Dep A", "Dep B")) 
+
+
+```
+
+We can see that more men were admitted than women, but let's compare the admission percent (divide by number of men or women):
+
+
+```{r, echo=FALSE}
+addmited_percent <- c((sum(men_addmited)/2000),(sum(women_addmited)/1100))
+b <- barplot(addmited_percent, col = c('#80bfff'), ylab = "Percent admited", names.arg = c("Men", "Women"), main = "Percentage admitted", legend = c("Overall"))
+
+```
+
+Although each department accepted the same percent, with no regard to men/women applicants, higher percentage of men were admitted due to the higher applications for department A (50% of men) comparing to the women's. Department A's admission chances were higher (60%) than department B's, so a higher percentage of men were admitted. 
